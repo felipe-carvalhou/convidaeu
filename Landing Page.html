@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Convida&amp;u · Convites Digitais Interativos</title>
+<link rel="icon" type="image/png" href="assets/icon.png" />
+<link rel="apple-touch-icon" href="assets/icon.png" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          script: ['"Dancing Script"', 'cursive'],
+        },
+        colors: {
+          cream: {
+            50:  '#fbf7f2',
+            100: '#f6efe5',
+            200: '#ecdfc8',
+          },
+          lilac: {
+            50:  '#eef2f9',
+            100: '#d9e1f0',
+            200: '#b3c2dc',
+            300: '#7d92b9',
+            400: '#4a6293',
+            500: '#1f3a6b',
+            600: '#162a4f',
+          },
+          ink:  '#1a1623',
+          gold: '#c9a35c',
+          gold2:'#e7c98a',
+        },
+        boxShadow: {
+          phone: '0 30px 60px -20px rgba(26,22,35,0.45), 0 10px 30px -10px rgba(26,22,35,0.35)',
+          soft:  '0 10px 30px -10px rgba(26,22,35,0.18)',
+        },
+        animation: {
+          float:    'float 6s ease-in-out infinite',
+          floatSlow:'float 9s ease-in-out infinite',
+          shimmer:  'shimmer 3s linear infinite',
+          twinkle:  'twinkle 2.4s ease-in-out infinite',
+        },
+        keyframes: {
+          float:    { '0%,100%':{transform:'translateY(0)'}, '50%':{transform:'translateY(-14px)'} },
+          shimmer:  { '0%':{backgroundPosition:'-200% 0'}, '100%':{backgroundPosition:'200% 0'} },
+          twinkle:  { '0%,100%':{opacity:'0.4',transform:'scale(0.9)'}, '50%':{opacity:'1',transform:'scale(1.1)'} },
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #fbf7f2; color: #1a1623; }
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-script  { font-family: 'Dancing Script', cursive; }
+
+  /* gold shimmer text */
+  .gold-text {
+    background: linear-gradient(90deg, #b8893a 0%, #f4d98a 25%, #e7c98a 50%, #b8893a 75%, #f4d98a 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+  @keyframes shimmer { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+
+  /* Hero background gradient blocks */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse at 15% 20%, #f6e1d4 0%, transparent 45%),
+      radial-gradient(ellipse at 90% 80%, #d9e1f0 0%, transparent 45%),
+      linear-gradient(135deg, #fbf7f2 0%, #eef2f9 100%);
+  }
+
+  /* phone frame */
+  .phone {
+    width: 260px;
+    height: 540px;
+    border-radius: 44px;
+    background: linear-gradient(145deg, #2a2330 0%, #0f0c14 100%);
+    padding: 10px;
+    box-shadow: 0 30px 60px -20px rgba(26,22,35,0.55), 0 10px 30px -10px rgba(26,22,35,0.35);
+    position: relative;
+  }
+  .phone::before {
+    content:'';
+    position:absolute; inset:-2px;
+    border-radius: 46px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.25), rgba(255,255,255,0) 40%);
+    pointer-events:none;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    border-radius: 34px;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch {
+    position:absolute; top:10px; left:50%; transform:translateX(-50%);
+    width: 88px; height: 24px;
+    background:#0a0810; border-radius: 14px; z-index: 5;
+  }
+
+  /* INV 1 — Quinceañera elegante */
+  .inv-quince {
+    background:
+      radial-gradient(ellipse at 50% 0%, #efe1ff 0%, #e4d2f5 40%, #d6c0eb 100%);
+    color:#3d2960;
+  }
+  .quince-wreath {
+    position:absolute; top:135px; left:50%; transform:translateX(-50%);
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 1.5px solid #a988c9;
+  }
+  .quince-wreath::before,
+  .quince-wreath::after {
+    content:''; position:absolute;
+    width:18px; height:18px; border-radius:50%;
+    background: radial-gradient(circle, #c9a4e6 30%, #8a5fb3 100%);
+  }
+  .quince-wreath::before { top:-6px; left:30px; box-shadow: 110px 10px 0 -2px #b386d8, -8px 90px 0 -3px #a96fcf, 130px 100px 0 -2px #c9a4e6, 50px 150px 0 -3px #b386d8, 0 50px 0 -4px #a96fcf;}
+  .quince-wreath::after { bottom:0; right:20px; box-shadow: -10px -120px 0 -4px #d9b8ec, 20px -40px 0 -3px #c9a4e6, -120px -30px 0 -3px #a96fcf, -90px -90px 0 -4px #b386d8; }
+
+  /* INV 2 — Baile de máscaras */
+  .inv-masque {
+    background:
+      radial-gradient(ellipse at 50% 25%, #2a1f2e 0%, #110a14 70%, #050308 100%);
+    color:#e7c98a;
+  }
+  .masque-stars span {
+    position:absolute;
+    width:3px; height:3px; border-radius:50%;
+    background:#e7c98a;
+    box-shadow: 0 0 8px #e7c98a;
+    animation: twinkle 2.4s ease-in-out infinite;
+  }
+
+  /* INV 3 — Pixel party / gamer */
+  .inv-pixel {
+    background:
+      linear-gradient(180deg, #050a18 0%, #0b1430 60%, #1a2658 100%);
+    color:#7ad6ff;
+  }
+  .grid-floor {
+    position:absolute; bottom:0; left:0; right:0; height:40%;
+    background:
+      linear-gradient(transparent 0%, transparent 95%, #38b6ff 95%, transparent 100%),
+      repeating-linear-gradient(90deg, transparent 0 19px, #1f6bff 19px 20px),
+      repeating-linear-gradient(0deg,  transparent 0 19px, #1f6bff 19px 20px);
+    background-size: 100% 100%, 20px 100%, 100% 20px;
+    transform: perspective(220px) rotateX(55deg);
+    transform-origin: center bottom;
+    opacity: 0.5;
+  }
+  .pixel-cube {
+    position:absolute;
+    width: 16px; height:16px;
+    background:#ff4757;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.4) inset, 2px 2px 0 #c0392b;
+  }
+
+  /* envelope CTA inside phones */
+  .envelope {
+    width: 140px; aspect-ratio: 3/2;
+    background: linear-gradient(135deg, #d4b378 0%, #b8893a 50%, #d4b378 100%);
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  .envelope::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 49%, rgba(0,0,0,0.15) 50%);
+    clip-path: polygon(0 0, 100% 0, 50% 55%);
+  }
+
+  /* divider ornament */
+  .ornament {
+    display:inline-flex; align-items:center; gap:.75rem;
+  }
+  .ornament::before, .ornament::after {
+    content:''; width:60px; height:1px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+  }
+
+  /* tag chip */
+  .chip {
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.4rem .9rem; border-radius:999px;
+    border:1px solid rgba(26,22,35,0.12);
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    font-size:.78rem; letter-spacing:.04em; text-transform:uppercase;
+    font-weight:500; color:#3d2960;
+  }
+
+  /* marquee */
+  .marquee { display:flex; gap:3rem; animation: scroll 30s linear infinite; }
+  @keyframes scroll { from {transform:translateX(0)} to {transform:translateX(-50%)} }
+
+  /* faq item */
+  details[open] summary svg { transform: rotate(45deg); }
+  summary { list-style: none; cursor:pointer; }
+  summary::-webkit-details-marker { display:none; }
+
+  /* hero floating decorations */
+  .deco-butterfly { position:absolute; font-size:24px; opacity:0.6; }
+
+  /* gradient border button */
+  .btn-primary {
+    background: linear-gradient(135deg, #162a4f 0%, #1f3a6b 50%, #4a6293 100%);
+    color: white;
+    box-shadow: 0 10px 30px -8px rgba(22,42,79,0.5);
+    transition: all .25s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -10px rgba(22,42,79,0.6); }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #b8893a 0%, #e7c98a 50%, #b8893a 100%);
+    background-size: 200% 100%;
+    color: #1a1623;
+    transition: all .3s ease;
+  }
+  .btn-gold:hover { background-position: 100% 0; }
+
+  /* theme card hover */
+  .theme-card { transition: transform .4s ease, box-shadow .4s ease; }
+  .theme-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -20px rgba(26,22,35,0.3); }
+
+  /* preview envelope animation */
+  .demo-envelope { transition: transform .8s cubic-bezier(.7,.0,.3,1), opacity .4s ease; }
+  .demo-envelope.open { transform: translateY(-120%) rotate(-8deg); opacity:0; }
+  .demo-card { transition: transform .8s cubic-bezier(.2,.8,.2,1), opacity .6s ease .2s; opacity:0; transform: translateY(40px) scale(0.95); }
+  .demo-card.show { opacity:1; transform: translateY(0) scale(1); }
+
+  /* reveal on scroll */
+  .reveal { opacity:0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity:1; transform: translateY(0); }
+
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ NAV ============ -->
+<nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-cream-50/70 border-b border-ink/5">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center">
+      <img src="assets/convidaeu-logo-mark.png" alt="Convida&amp;u" class="h-9 md:h-10 w-auto" style="object-fit:contain;" />
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-ink/70">
+      <a href="#temas" class="hover:text-ink transition">Temas</a>
+      <a href="#como" class="hover:text-ink transition">Como funciona</a>
+      <a href="#preview" class="hover:text-ink transition">Preview</a>
+      <a href="#precos" class="hover:text-ink transition">Preços</a>
+      <a href="#faq" class="hover:text-ink transition">Dúvidas</a>
+    </div>
+    <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20criar%20meu%20convite%20digital" target="_blank" rel="noopener" class="btn-primary px-5 py-2.5 rounded-full text-sm font-medium">Criar meu convite</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero-bg relative pt-32 pb-24 overflow-hidden">
+  <!-- decorative -->
+  <div class="absolute top-32 left-10 text-lilac-300 opacity-40 animate-floatSlow">
+    <svg width="80" height="80" viewBox="0 0 100 100" fill="none"><path d="M50 10 C 60 30, 80 40, 90 50 C 80 60, 60 70, 50 90 C 40 70, 20 60, 10 50 C 20 40, 40 30, 50 10Z" stroke="currentColor" stroke-width="1"/></svg>
+  </div>
+  <div class="absolute bottom-24 right-12 text-lilac-300 opacity-40 animate-float">
+    <svg width="60" height="60" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="1"/><circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1"/></svg>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+    <!-- left -->
+    <div class="relative z-10">
+      <div class="chip mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-lilac-500 animate-twinkle"></span>
+        Convites digitais animados
+      </div>
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
+        Do <em class="italic gold-text">sofisticado</em> ao <em class="italic text-lilac-500">divertido</em>,
+        crie a celebração dos seus sonhos.
+      </h1>
+      <p class="mt-6 text-lg text-ink/70 max-w-xl">
+        Convites animados, interativos e exclusivos — entregues no seu WhatsApp em até 24h. Para XV anos, casamentos, infantis, corporativos e festas temáticas.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20meu%20convite%20digital" target="_blank" rel="noopener" class="btn-primary px-7 py-3.5 rounded-full font-medium">Quero meu convite</a>
+        <a href="#preview" class="px-7 py-3.5 rounded-full border border-ink/15 hover:border-ink/40 transition font-medium text-ink">Ver demonstração</a>
+      </div>
+
+      <!-- mini stats -->
+      <div class="mt-12 grid grid-cols-3 gap-6 max-w-md">
+        <div>
+          <div class="font-display text-3xl text-lilac-600">+2.300</div>
+          <div class="text-xs text-ink/60 uppercase tracking-wider mt-1">Convites enviados</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl text-lilac-600">24h</div>
+          <div class="text-xs text-ink/60 uppercase tracking-wider mt-1">Entrega rápida</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl text-lilac-600">4.9★</div>
+          <div class="text-xs text-ink/60 uppercase tracking-wider mt-1">Nota dos clientes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: 3 phones -->
+    <div class="relative h-[600px] flex justify-center items-center">
+      <!-- phone left -->
+      <div class="absolute left-0 top-12 -rotate-6 animate-floatSlow scale-90">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="phone-screen inv-quince">
+            <div class="absolute inset-0 flex flex-col items-center pt-14 px-6 text-center">
+              <div class="font-script text-3xl text-lilac-600">Save the Date</div>
+              <div class="mt-1 text-[10px] tracking-[0.3em] text-lilac-600">26 · 09 · 2026</div>
+              <div class="quince-wreath mt-6">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="font-script text-4xl text-lilac-600">RC</div>
+                </div>
+              </div>
+              <div class="mt-44 font-script text-3xl text-lilac-600">Renata Carvalho</div>
+              <div class="mt-1 font-display text-2xl text-lilac-600 tracking-widest">XV</div>
+              <div class="mt-6 px-5 py-2 rounded-full bg-lilac-200/70 text-lilac-700 text-[10px] tracking-[0.3em] uppercase">Abrir convite</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- phone center -->
+      <div class="relative z-10 animate-float">
+        <div class="phone scale-110">
+          <div class="notch"></div>
+          <div class="phone-screen bg-black">
+            <img src="assets/geovanna-baile.png" alt="Convite Baile de Máscaras - Geovanna Anita" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+
+      <!-- phone right -->
+      <div class="absolute right-0 top-12 rotate-6 animate-floatSlow scale-90" style="animation-delay:1s">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="phone-screen inv-pixel">
+            <div class="grid-floor"></div>
+            <!-- cubes -->
+            <div class="pixel-cube" style="top:20%;left:15%;background:#ff4757"></div>
+            <div class="pixel-cube" style="top:30%;right:18%;background:#3ddc97"></div>
+            <div class="pixel-cube" style="bottom:35%;left:20%;background:#ffd93d"></div>
+            <div class="pixel-cube" style="bottom:30%;right:15%;background:#5a9fff"></div>
+            <div class="absolute inset-0 flex flex-col items-center pt-16 px-6 text-center">
+              <div class="text-[9px] tracking-[0.4em] text-cyan-300 uppercase">▮▮ Festa Player ▮▮</div>
+              <div class="mt-2 text-[10px] tracking-[0.3em] text-cyan-300/80">Level 10 desbloqueado</div>
+              <div class="mt-6 font-sans font-extrabold text-5xl tracking-tight" style="color:#5ad8ff; text-shadow: 0 0 12px rgba(90,216,255,0.5), 3px 3px 0 #0a3a8a;">ERICK</div>
+              <div class="mt-2 text-[10px] tracking-[0.3em] text-cyan-300/80">10 ANOS · 06 / 06 / 2026</div>
+              <div class="mt-8 w-32 h-20 relative" style="background: linear-gradient(135deg, #c0392b 0%, #8b1a1a 100%); clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);">
+                <div class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs tracking-widest pt-2">PLAY</div>
+              </div>
+              <div class="mt-3 text-[9px] tracking-[0.2em] text-cyan-300/70 uppercase">▶ Iniciar convite</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MARQUEE TRUST BAR ============ -->
+<section class="bg-ink text-cream-100 py-6 overflow-hidden">
+  <div class="marquee whitespace-nowrap font-display text-2xl italic">
+    <div class="flex gap-12 shrink-0">
+      <span>✦ XV Anos</span><span>✦ Casamentos</span><span>✦ Festas Infantis</span><span>✦ Chá Revelação</span><span>✦ Bodas</span><span>✦ Aniversário</span><span>✦ Corporativos</span><span>✦ Batizado</span>
+    </div>
+    <div class="flex gap-12 shrink-0">
+      <span>✦ XV Anos</span><span>✦ Casamentos</span><span>✦ Festas Infantis</span><span>✦ Chá Revelação</span><span>✦ Bodas</span><span>✦ Aniversário</span><span>✦ Corporativos</span><span>✦ Batizado</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section id="como" class="py-24 bg-cream-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <div class="ornament text-lilac-400 text-xs tracking-[0.4em] uppercase mb-4">Simples · Rápido · Exclusivo</div>
+      <h2 class="font-display text-5xl leading-tight">Do pedido ao convite no <em class="italic text-lilac-500">WhatsApp</em>, em 4 passos.</h2>
+    </div>
+
+    <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- step 1 -->
+      <div class="reveal bg-white rounded-3xl p-8 shadow-soft border border-ink/5 relative">
+        <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-lilac-500 text-white font-display text-2xl flex items-center justify-center shadow-soft">1</div>
+        <div class="w-14 h-14 rounded-2xl bg-lilac-100 flex items-center justify-center mb-4">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="1.5"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><path d="M8 14h2M8 17h6"/></svg>
+        </div>
+        <h3 class="font-display text-2xl">Escolha o tema</h3>
+        <p class="text-ink/65 text-sm mt-2">Navegue pela nossa coleção: do clássico ao geek, do delicado ao ousado.</p>
+      </div>
+      <!-- step 2 -->
+      <div class="reveal bg-white rounded-3xl p-8 shadow-soft border border-ink/5 relative">
+        <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-lilac-500 text-white font-display text-2xl flex items-center justify-center shadow-soft">2</div>
+        <div class="w-14 h-14 rounded-2xl bg-lilac-100 flex items-center justify-center mb-4">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+        </div>
+        <h3 class="font-display text-2xl">Personalize</h3>
+        <p class="text-ink/65 text-sm mt-2">Envie nomes, datas, foto, local e a história da festa — nós cuidamos do resto.</p>
+      </div>
+      <!-- step 3 -->
+      <div class="reveal bg-white rounded-3xl p-8 shadow-soft border border-ink/5 relative">
+        <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-lilac-500 text-white font-display text-2xl flex items-center justify-center shadow-soft">3</div>
+        <div class="w-14 h-14 rounded-2xl bg-lilac-100 flex items-center justify-center mb-4">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="font-display text-2xl">Aprove a prévia</h3>
+        <p class="text-ink/65 text-sm mt-2">Você recebe um preview e pode pedir ajustes antes da entrega final.</p>
+      </div>
+      <!-- step 4 -->
+      <div class="reveal bg-white rounded-3xl p-8 shadow-soft border border-ink/5 relative">
+        <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-lilac-500 text-white font-display text-2xl flex items-center justify-center shadow-soft">4</div>
+        <div class="w-14 h-14 rounded-2xl bg-lilac-100 flex items-center justify-center mb-4">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <h3 class="font-display text-2xl">Envie a todos</h3>
+        <p class="text-ink/65 text-sm mt-2">Link único e compartilhável. Funciona em qualquer celular, sem instalar nada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEMAS ============ -->
+<section id="temas" class="py-24 bg-gradient-to-b from-cream-50 to-lilac-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <div class="ornament text-lilac-400 text-xs tracking-[0.4em] uppercase mb-4">Coleção 2026</div>
+      <h2 class="font-display text-5xl leading-tight">A arte do <em class="italic gold-text">convite digital</em>.</h2>
+      <p class="mt-4 text-ink/65">De elegantes bailes de máscaras a festas temáticas lúdicas — escolha sua vibe.</p>
+    </div>
+
+    <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- card 1 quince -->
+      <div class="theme-card reveal bg-white rounded-3xl overflow-hidden shadow-soft border border-ink/5">
+        <div class="aspect-[3/4] relative inv-quince">
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+            <div class="font-script text-3xl text-lilac-600">Renata Carvalho</div>
+            <div class="mt-1 font-display text-2xl text-lilac-700 tracking-[0.4em]">XV</div>
+            <div class="my-5 w-16 h-px bg-lilac-400"></div>
+            <div class="text-[10px] tracking-[0.3em] text-lilac-700 uppercase">Tema Euphoria</div>
+            <div class="text-[10px] tracking-[0.3em] text-lilac-700 uppercase">Lilás &amp; Brilho</div>
+          </div>
+        </div>
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h4 class="font-display text-2xl">Euphoria</h4>
+            <p class="text-xs text-ink/60 uppercase tracking-wider mt-1">XV Anos · Casamento</p>
+          </div>
+          <span class="text-xs text-lilac-600 font-medium">Ver tema →</span>
+        </div>
+      </div>
+
+      <!-- card 2 masque -->
+      <div class="theme-card reveal bg-white rounded-3xl overflow-hidden shadow-soft border border-ink/5">
+        <div class="aspect-[3/4] relative inv-masque">
+          <div class="masque-stars absolute inset-0">
+            <span style="top:15%;left:20%"></span>
+            <span style="top:75%;left:80%;animation-delay:1s"></span>
+            <span style="top:40%;left:60%;animation-delay:1.5s"></span>
+          </div>
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+            <div class="text-[10px] tracking-[0.4em] text-gold2 uppercase">Baile de Máscaras</div>
+            <div class="mt-3 font-display italic text-4xl gold-text">Geovanna</div>
+            <div class="mt-1 font-script text-2xl gold-text">Anita</div>
+            <div class="my-5 w-16 h-px bg-gold/60"></div>
+            <div class="text-[10px] tracking-[0.3em] text-gold2 uppercase">XV Anos</div>
+            <div class="text-[10px] tracking-[0.3em] text-gold2 uppercase mt-1">10 / 10 / 2026</div>
+          </div>
+        </div>
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h4 class="font-display text-2xl">Veneziano</h4>
+            <p class="text-xs text-ink/60 uppercase tracking-wider mt-1">XV · Baile · Corporativo</p>
+          </div>
+          <span class="text-xs text-lilac-600 font-medium">Ver tema →</span>
+        </div>
+      </div>
+
+      <!-- card 3 pixel -->
+      <div class="theme-card reveal bg-white rounded-3xl overflow-hidden shadow-soft border border-ink/5">
+        <div class="aspect-[3/4] relative inv-pixel">
+          <div class="grid-floor"></div>
+          <div class="pixel-cube" style="top:18%;left:15%"></div>
+          <div class="pixel-cube" style="top:25%;right:18%;background:#3ddc97"></div>
+          <div class="pixel-cube" style="bottom:30%;left:18%;background:#ffd93d"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+            <div class="text-[10px] tracking-[0.4em]" style="color:#5ad8ff">▮ Festa Player ▮</div>
+            <div class="mt-3 font-sans font-extrabold text-5xl tracking-tight" style="color:#5ad8ff; text-shadow:0 0 12px rgba(90,216,255,0.5), 3px 3px 0 #0a3a8a;">ERICK</div>
+            <div class="mt-2 text-[10px] tracking-[0.3em]" style="color:#5ad8ff">10 ANOS</div>
+            <div class="mt-1 text-[10px] tracking-[0.3em]" style="color:#5ad8ff">06 / 06 / 2026</div>
+          </div>
+        </div>
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h4 class="font-display text-2xl">Pixel Quest</h4>
+            <p class="text-xs text-ink/60 uppercase tracking-wider mt-1">Infantil · Gamer</p>
+          </div>
+          <span class="text-xs text-lilac-600 font-medium">Ver tema →</span>
+        </div>
+      </div>
+
+      <!-- card 4 floral -->
+      <div class="theme-card reveal bg-white rounded-3xl overflow-hidden shadow-soft border border-ink/5">
+        <div class="aspect-[3/4] relative" style="background: radial-gradient(ellipse at 50% 30%, #fce8d6 0%, #f3d3b5 60%, #e6b88f 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center text-stone-700">
+            <div class="font-script text-4xl">Marina &amp; João</div>
+            <div class="my-4 w-12 h-px bg-stone-500"></div>
+            <div class="text-[10px] tracking-[0.4em] uppercase">Nosso casamento</div>
+            <div class="mt-2 font-display text-2xl">15.11.2026</div>
+            <div class="mt-4 text-3xl">❀</div>
+          </div>
+        </div>
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h4 class="font-display text-2xl">Toscana</h4>
+            <p class="text-xs text-ink/60 uppercase tracking-wider mt-1">Casamento · Bodas</p>
+          </div>
+          <span class="text-xs text-lilac-600 font-medium">Ver tema →</span>
+        </div>
+      </div>
+
+      <!-- card 5 boho -->
+      <div class="theme-card reveal bg-white rounded-3xl overflow-hidden shadow-soft border border-ink/5">
+        <div class="aspect-[3/4] relative" style="background: linear-gradient(180deg, #e8dcc4 0%, #c8b08a 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center text-stone-800">
+            <div class="text-3xl">☼</div>
+            <div class="mt-3 text-[10px] tracking-[0.5em] uppercase">Chá Bar</div>
+            <div class="mt-4 font-display italic text-4xl">Beatriz</div>
+            <div class="mt-2 text-[10px] tracking-[0.4em] uppercase">15 de outubro</div>
+            <div class="my-4 w-12 h-px bg-stone-700"></div>
+            <div class="font-script text-2xl">Vem celebrar</div>
+          </div>
+        </div>
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h4 class="font-display text-2xl">Boho Terra</h4>
+            <p class="text-xs text-ink/60 uppercase tracking-wider mt-1">Chá · Aniversário</p>
+          </div>
+          <span class="text-xs text-lilac-600 font-medium">Ver tema →</span>
+        </div>
+      </div>
+
+      <!-- card 6 reveal -->
+      <div class="theme-card reveal bg-white rounded-3xl overflow-hidden shadow-soft border border-ink/5">
+        <div class="aspect-[3/4] relative" style="background: linear-gradient(135deg, #ffd8e4 0%, #c8e0ff 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center text-slate-700">
+            <div class="text-[10px] tracking-[0.5em] uppercase">Chá Revelação</div>
+            <div class="mt-4 font-script text-4xl">Será que vem...</div>
+            <div class="mt-6 flex gap-3">
+              <div class="w-12 h-12 rounded-full bg-pink-300/60 flex items-center justify-center text-2xl">♀</div>
+              <div class="w-12 h-12 rounded-full bg-blue-300/60 flex items-center justify-center text-2xl">♂</div>
+            </div>
+            <div class="mt-6 font-display text-xl italic">Marina &amp; Felipe</div>
+          </div>
+        </div>
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h4 class="font-display text-2xl">Pink or Blue</h4>
+            <p class="text-xs text-ink/60 uppercase tracking-wider mt-1">Chá Revelação · Baby</p>
+          </div>
+          <span class="text-xs text-lilac-600 font-medium">Ver tema →</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-12 text-center reveal">
+      <a href="#precos" class="inline-flex items-center gap-2 text-lilac-600 font-medium hover:gap-3 transition-all">
+        Ver todos os 40+ temas
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INTERACTIVE PREVIEW ============ -->
+<section id="preview" class="py-24 bg-ink text-cream-50 relative overflow-hidden">
+  <!-- ambient stars -->
+  <div class="absolute inset-0 pointer-events-none">
+    <span class="absolute top-20 left-1/4 w-1 h-1 bg-gold rounded-full animate-twinkle"></span>
+    <span class="absolute top-40 right-1/3 w-1 h-1 bg-gold rounded-full animate-twinkle" style="animation-delay:.6s"></span>
+    <span class="absolute bottom-32 left-1/3 w-1 h-1 bg-gold rounded-full animate-twinkle" style="animation-delay:1.2s"></span>
+    <span class="absolute bottom-20 right-1/4 w-1 h-1 bg-gold rounded-full animate-twinkle" style="animation-delay:1.8s"></span>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative">
+    <div class="reveal">
+      <div class="ornament text-gold text-xs tracking-[0.4em] uppercase mb-4">Experimente agora</div>
+      <h2 class="font-display text-5xl leading-tight">Toque no envelope. <em class="italic gold-text">Veja a mágica</em>.</h2>
+      <p class="mt-5 text-cream-100/70 max-w-lg">Convites com animações, música, contagem regressiva, mapa, RSVP e lista de presentes — tudo dentro do mesmo link. Sem app, sem cadastro, sem complicação.</p>
+      <ul class="mt-8 space-y-3 text-cream-100/85">
+        <li class="flex items-center gap-3">
+          <span class="w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">✦</span>
+          Animação de abertura personalizada
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">✦</span>
+          RSVP integrado direto no WhatsApp
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">✦</span>
+          Música, fotos e contagem regressiva
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">✦</span>
+          Mapa do local com 1 toque
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex justify-center reveal">
+      <div class="phone" style="width:300px; height:620px;">
+        <div class="notch"></div>
+        <div class="phone-screen inv-masque">
+          <div class="masque-stars absolute inset-0">
+            <span style="top:10%;left:20%"></span>
+            <span style="top:30%;left:75%;animation-delay:.4s"></span>
+            <span style="top:60%;left:12%;animation-delay:.8s"></span>
+            <span style="top:80%;left:80%;animation-delay:1.2s"></span>
+          </div>
+
+          <!-- Envelope state -->
+          <div id="demoEnvelope" class="demo-envelope absolute inset-0 flex flex-col items-center justify-center px-6 text-center cursor-pointer" onclick="openInvite()">
+            <svg width="100" height="56" viewBox="0 0 120 60" fill="none" class="mb-4">
+              <path d="M10 30 Q 20 5 45 12 Q 60 18 75 12 Q 100 5 110 30 Q 100 50 75 45 Q 60 38 45 45 Q 20 50 10 30Z" fill="url(#gold2)"/>
+              <circle cx="35" cy="28" r="6" fill="#0a0810"/>
+              <circle cx="85" cy="28" r="6" fill="#0a0810"/>
+              <defs>
+                <linearGradient id="gold2" x1="0" y1="0" x2="120" y2="60">
+                  <stop offset="0" stop-color="#b8893a"/>
+                  <stop offset=".5" stop-color="#f4d98a"/>
+                  <stop offset="1" stop-color="#b8893a"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="text-[10px] tracking-[0.4em] text-gold2 uppercase">Baile de Máscaras</div>
+            <div class="mt-3 font-display italic text-3xl gold-text">Geovanna Anita</div>
+            <div class="mt-1 text-[10px] tracking-[0.3em] text-gold2/80">XV ANOS · 10 / 10 / 2026</div>
+
+            <div class="mt-10 envelope"></div>
+            <div class="mt-4 px-5 py-2 rounded-full border border-gold/40 text-gold2 text-[10px] tracking-[0.3em] uppercase">Toque para abrir</div>
+          </div>
+
+          <!-- Opened state -->
+          <div id="demoCard" class="demo-card absolute inset-0 flex flex-col items-center pt-12 px-5 text-center overflow-y-auto">
+            <div class="text-[9px] tracking-[0.4em] text-gold2 uppercase">Você está convidado</div>
+            <div class="mt-2 font-display italic text-3xl gold-text">Geovanna Anita</div>
+            <div class="mt-1 text-[10px] tracking-[0.3em] text-gold2/80">XV ANOS</div>
+            <div class="my-3 w-10 h-px bg-gold/50"></div>
+            <p class="text-[10px] text-cream-100/70 leading-relaxed px-2">Com imensa alegria, convido você para celebrar uma noite de Euphoria — envolta em luz e magia.</p>
+
+            <div class="mt-5 grid grid-cols-2 gap-2 w-full">
+              <div class="rounded-xl border border-gold/20 p-3">
+                <div class="text-[8px] tracking-[0.3em] text-gold2/70">DATA</div>
+                <div class="font-display text-base mt-1">10 · 10 · 2026</div>
+              </div>
+              <div class="rounded-xl border border-gold/20 p-3">
+                <div class="text-[8px] tracking-[0.3em] text-gold2/70">HORÁRIO</div>
+                <div class="font-display text-base mt-1">20 horas</div>
+              </div>
+            </div>
+
+            <div class="mt-2 rounded-xl border border-gold/20 p-3 w-full">
+              <div class="text-[8px] tracking-[0.3em] text-gold2/70">LOCAL</div>
+              <div class="font-display text-base mt-1">Espaço Celebrare</div>
+              <div class="text-[9px] text-cream-100/60 mt-1">R. das Camélias, 51 — São Paulo</div>
+            </div>
+
+            <div id="countdown" class="mt-3 grid grid-cols-4 gap-1.5 w-full">
+              <div class="rounded-lg bg-gold/10 p-2">
+                <div id="cd-d" class="font-display text-lg">--</div>
+                <div class="text-[7px] tracking-widest text-gold2/70">DIAS</div>
+              </div>
+              <div class="rounded-lg bg-gold/10 p-2">
+                <div id="cd-h" class="font-display text-lg">--</div>
+                <div class="text-[7px] tracking-widest text-gold2/70">HRS</div>
+              </div>
+              <div class="rounded-lg bg-gold/10 p-2">
+                <div id="cd-m" class="font-display text-lg">--</div>
+                <div class="text-[7px] tracking-widest text-gold2/70">MIN</div>
+              </div>
+              <div class="rounded-lg bg-gold/10 p-2">
+                <div id="cd-s" class="font-display text-lg">--</div>
+                <div class="text-[7px] tracking-widest text-gold2/70">SEG</div>
+              </div>
+            </div>
+
+            <div class="mt-3 flex gap-2 w-full">
+              <button class="flex-1 btn-gold py-2 rounded-full text-[10px] tracking-widest uppercase font-semibold">Confirmar presença</button>
+              <button class="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center" onclick="closeInvite()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e7c98a" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREÇOS ============ -->
+<section id="precos" class="py-24 bg-cream-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <div class="ornament text-lilac-400 text-xs tracking-[0.4em] uppercase mb-4">Planos</div>
+      <h2 class="font-display text-5xl leading-tight">Personalize seu <em class="italic gold-text">estilo único</em>, agora.</h2>
+      <p class="mt-4 text-ink/65">Pagamento único. Sem mensalidade. Sem letras miúdas.</p>
+    </div>
+
+    <div class="mt-16 grid md:grid-cols-3 gap-6">
+      <!-- Essencial -->
+      <div class="reveal bg-white rounded-3xl p-8 border border-ink/8 shadow-soft">
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl">Essencial</h3>
+          <span class="text-xs text-ink/60 uppercase tracking-widest">Estático</span>
+        </div>
+        <div class="mt-6 flex items-baseline gap-1">
+          <span class="text-sm text-ink/60">R$</span>
+          <span class="font-display text-5xl">49</span>
+          <span class="text-sm text-ink/60">,90</span>
+        </div>
+        <p class="text-xs text-ink/55 mt-2">à vista no Pix</p>
+        <ul class="mt-7 space-y-3 text-sm text-ink/75">
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Convite em alta resolução (JPG/PDF)</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Personalização de nomes e dados</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Entrega em até 48h</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> 2 revisões inclusas</li>
+        </ul>
+        <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20o%20plano%20Essencial%20da%20Convida%26u" target="_blank" rel="noopener" class="mt-8 w-full block text-center py-3 rounded-full border border-ink/15 hover:bg-ink/5 transition font-medium">Quero o Essencial</a>
+      </div>
+
+      <!-- Animado popular -->
+      <div class="reveal bg-ink text-cream-50 rounded-3xl p-8 shadow-2xl relative scale-105">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gold text-ink text-[10px] tracking-widest uppercase font-bold">Mais Pedido</div>
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl gold-text">Animado</h3>
+          <span class="text-xs text-cream-100/60 uppercase tracking-widest">Interativo</span>
+        </div>
+        <div class="mt-6 flex items-baseline gap-1">
+          <span class="text-sm text-cream-100/60">R$</span>
+          <span class="font-display text-5xl">89</span>
+          <span class="text-sm text-cream-100/60">,90</span>
+        </div>
+        <p class="text-xs text-cream-100/55 mt-2">à vista no Pix · ou 3x no cartão</p>
+        <ul class="mt-7 space-y-3 text-sm text-cream-100/85">
+          <li class="flex gap-2"><span class="text-gold">✦</span> Tudo do Essencial</li>
+          <li class="flex gap-2"><span class="text-gold">✦</span> Vídeo animado em MP4 + Link web</li>
+          <li class="flex gap-2"><span class="text-gold">✦</span> Música personalizada</li>
+          <li class="flex gap-2"><span class="text-gold">✦</span> Contagem regressiva + Mapa</li>
+          <li class="flex gap-2"><span class="text-gold">✦</span> Entrega em até 24h</li>
+        </ul>
+        <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20o%20plano%20Animado%20da%20Convida%26u" target="_blank" rel="noopener" class="mt-8 w-full block text-center py-3 rounded-full btn-gold font-semibold">Quero o Animado</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="reveal bg-white rounded-3xl p-8 border border-ink/8 shadow-soft">
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl">Premium</h3>
+          <span class="text-xs text-ink/60 uppercase tracking-widest">Exclusivo</span>
+        </div>
+        <div class="mt-6 flex items-baseline gap-1">
+          <span class="text-sm text-ink/60">R$</span>
+          <span class="font-display text-5xl">149</span>
+          <span class="text-sm text-ink/60">,90</span>
+        </div>
+        <p class="text-xs text-ink/55 mt-2">à vista no Pix · ou 6x no cartão</p>
+        <ul class="mt-7 space-y-3 text-sm text-ink/75">
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Tudo do Animado</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Design 100% exclusivo (não-template)</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> RSVP com painel de respostas</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Lista de presentes integrada</li>
+          <li class="flex gap-2"><span class="text-lilac-500">✓</span> Suporte prioritário no WhatsApp</li>
+        </ul>
+        <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20o%20plano%20Premium%20da%20Convida%26u" target="_blank" rel="noopener" class="mt-8 w-full block text-center py-3 rounded-full border border-ink/15 hover:bg-ink/5 transition font-medium">Quero o Premium</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="py-24 bg-lilac-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <div class="ornament text-lilac-400 text-xs tracking-[0.4em] uppercase mb-4">Quem celebrou com a gente</div>
+      <h2 class="font-display text-5xl leading-tight">Mais de <em class="italic gold-text">2.300 festas</em> começaram aqui.</h2>
+    </div>
+
+    <div class="mt-16 grid md:grid-cols-3 gap-6">
+      <div class="reveal bg-white rounded-3xl p-7 shadow-soft border border-ink/5">
+        <div class="flex gap-1 text-gold mb-4">★★★★★</div>
+        <p class="font-display text-xl italic leading-snug">"Os convidados ficaram impressionados. A música tocando e o nome da minha filha aparecendo... emocionou todo mundo."</p>
+        <div class="mt-5 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-lilac-300 to-lilac-500"></div>
+          <div>
+            <div class="font-medium text-sm">Patrícia Mendes</div>
+            <div class="text-xs text-ink/55">XV da Renata · Set/2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal bg-white rounded-3xl p-7 shadow-soft border border-ink/5">
+        <div class="flex gap-1 text-gold mb-4">★★★★★</div>
+        <p class="font-display text-xl italic leading-snug">"Pedi de manhã, recebi à tarde. Acabei o RSVP do casamento em 2 dias. Vale cada centavo."</p>
+        <div class="mt-5 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-300 to-amber-600"></div>
+          <div>
+            <div class="font-medium text-sm">Marina &amp; João</div>
+            <div class="text-xs text-ink/55">Casamento · Nov/2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal bg-white rounded-3xl p-7 shadow-soft border border-ink/5">
+        <div class="flex gap-1 text-gold mb-4">★★★★★</div>
+        <p class="font-display text-xl italic leading-snug">"Festa do meu filho com tema gamer e o convite ficou exatamente como ele queria. Os amiguinhos surtaram!"</p>
+        <div class="mt-5 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-300 to-blue-600"></div>
+          <div>
+            <div class="font-medium text-sm">Camila Souza</div>
+            <div class="text-xs text-ink/55">10 anos do Erick · Jun/2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="py-24 bg-cream-50">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center reveal">
+      <div class="ornament text-lilac-400 text-xs tracking-[0.4em] uppercase mb-4">Dúvidas frequentes</div>
+      <h2 class="font-display text-5xl leading-tight">Você pergunta. <em class="italic text-lilac-500">A gente responde.</em></h2>
+    </div>
+
+    <div class="mt-12 space-y-3">
+      <details class="reveal group bg-white rounded-2xl p-6 border border-ink/5 shadow-soft">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-xl">Como recebo meu convite?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="2" class="transition-transform"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="mt-4 text-ink/65 text-sm leading-relaxed">Você recebe um link único e exclusivo no seu WhatsApp. Basta abrir o link em qualquer celular para ver o convite — não precisa baixar app nem se cadastrar. Para o plano Animado, você também recebe um vídeo MP4 que pode ser enviado direto em grupos do WhatsApp.</p>
+      </details>
+
+      <details class="reveal group bg-white rounded-2xl p-6 border border-ink/5 shadow-soft">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-xl">Posso usar minha própria foto?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="2" class="transition-transform"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="mt-4 text-ink/65 text-sm leading-relaxed">Sim! Você envia as fotos pelo WhatsApp e nós ajustamos o tratamento de cor para combinar com o tema escolhido. Recomendamos fotos com boa iluminação e em alta resolução.</p>
+      </details>
+
+      <details class="reveal group bg-white rounded-2xl p-6 border border-ink/5 shadow-soft">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-xl">Quantas revisões estão incluídas?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="2" class="transition-transform"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="mt-4 text-ink/65 text-sm leading-relaxed">Essencial inclui 2 revisões, Animado inclui 3 e Premium inclui ajustes ilimitados até sua aprovação final. Revisões extras custam R$ 15 cada.</p>
+      </details>
+
+      <details class="reveal group bg-white rounded-2xl p-6 border border-ink/5 shadow-soft">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-xl">E se eu quiser um tema que não está na lista?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="2" class="transition-transform"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="mt-4 text-ink/65 text-sm leading-relaxed">No plano Premium criamos um design 100% exclusivo do zero — você nos conta a referência, paleta e estilo, e nossa equipe desenha um tema só seu. Ideal para casamentos e eventos corporativos.</p>
+      </details>
+
+      <details class="reveal group bg-white rounded-2xl p-6 border border-ink/5 shadow-soft">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-xl">Por quanto tempo o link fica no ar?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="2" class="transition-transform"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="mt-4 text-ink/65 text-sm leading-relaxed">Seu link fica ativo por 6 meses após a data do evento, sem custo adicional. Você ainda pode estender por mais R$ 19/ano se quiser manter como recordação.</p>
+      </details>
+
+      <details class="reveal group bg-white rounded-2xl p-6 border border-ink/5 shadow-soft">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-xl">Funciona em qualquer celular?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5d3f86" stroke-width="2" class="transition-transform"><path d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="mt-4 text-ink/65 text-sm leading-relaxed">Sim — iPhone, Android, tablets e computadores. Basta ter conexão com a internet e qualquer navegador atualizado.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="py-28 bg-gradient-to-br from-ink via-lilac-600 to-ink relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30">
+    <div class="absolute top-10 left-10 text-gold animate-floatSlow">✦</div>
+    <div class="absolute top-32 right-20 text-gold animate-float">✦</div>
+    <div class="absolute bottom-20 left-1/4 text-gold animate-floatSlow">✦</div>
+    <div class="absolute bottom-32 right-1/3 text-gold animate-float">✦</div>
+  </div>
+  <div class="max-w-3xl mx-auto px-6 text-center text-cream-50 relative">
+    <div class="ornament text-gold text-xs tracking-[0.4em] uppercase mb-4">Sua celebração começa aqui</div>
+    <h2 class="font-display text-5xl md:text-6xl leading-[1.05]">A festa <em class="italic gold-text">inesquecível</em><br/>começa com o convite certo.</h2>
+    <p class="mt-6 text-cream-100/75 max-w-xl mx-auto">Fale com a gente agora no WhatsApp e em 24 horas seu convite estará pronto para encantar todo mundo.</p>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20criar%20meu%20convite%20digital%20com%20a%20Convida%26u" target="_blank" rel="noopener" class="btn-gold px-8 py-4 rounded-full font-semibold">Criar meu convite agora</a>
+      <a href="https://wa.me/5521990570119" target="_blank" rel="noopener" class="px-8 py-4 rounded-full border border-cream-50/30 hover:border-cream-50 transition font-medium inline-flex items-center gap-2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-ink text-cream-100/60 py-12">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+    <div>
+      <div class="inline-block bg-cream-50 rounded-xl px-3 py-2">
+        <img src="assets/convidaeu-logo-mark.png" alt="Convida&amp;u" class="h-10 w-auto" style="object-fit:contain;" />
+      </div>
+      <p class="mt-3 text-sm">Convites digitais que dão vida às suas celebrações.</p>
+    </div>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-cream-50/80 mb-3">Coleções</div>
+      <ul class="space-y-1.5 text-sm">
+        <li><a href="#temas" class="hover:text-cream-50">XV Anos</a></li>
+        <li><a href="#temas" class="hover:text-cream-50">Casamento</a></li>
+        <li><a href="#temas" class="hover:text-cream-50">Infantil</a></li>
+        <li><a href="#temas" class="hover:text-cream-50">Chá Revelação</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-cream-50/80 mb-3">Convida&amp;u</div>
+      <ul class="space-y-1.5 text-sm">
+        <li><a href="#como" class="hover:text-cream-50">Como funciona</a></li>
+        <li><a href="#precos" class="hover:text-cream-50">Preços</a></li>
+        <li><a href="#faq" class="hover:text-cream-50">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-cream-50/80 mb-3">Contato</div>
+      <ul class="space-y-1.5 text-sm">
+        <li>contato@convidaeu.com.br</li>
+        <li>
+          <a href="https://wa.me/5521990570119" target="_blank" rel="noopener" class="hover:text-cream-50 inline-flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            (21) 99057-0119
+          </a>
+        </li>
+        <li>seg a sex · 9h–18h</li>
+        <li>
+          <a href="https://instagram.com/Convida.u" target="_blank" rel="noopener" class="hover:text-cream-50 inline-flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            @Convida&amp;u
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 mt-8 pt-6 border-t border-cream-50/10 text-xs flex flex-wrap justify-between gap-3">
+    <div>© 2026 Convida&amp;u. Todos os direitos reservados.</div>
+    <div class="flex gap-4">
+      <a href="#" class="hover:text-cream-50">Termos</a>
+      <a href="#" class="hover:text-cream-50">Privacidade</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ WHATSAPP FLOATING ============ -->
+<a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20convites%20digitais" target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-green-500 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // ===== Reveal on scroll =====
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Demo envelope interaction =====
+  function openInvite() {
+    document.getElementById('demoEnvelope').classList.add('open');
+    document.getElementById('demoCard').classList.add('show');
+    startCountdown();
+  }
+  function closeInvite() {
+    document.getElementById('demoEnvelope').classList.remove('open');
+    document.getElementById('demoCard').classList.remove('show');
+  }
+
+  // ===== Countdown =====
+  let cdTimer = null;
+  function startCountdown() {
+    if (cdTimer) return;
+    const target = new Date('2026-10-10T20:00:00').getTime();
+    const tick = () => {
+      const now = Date.now();
+      let diff = Math.max(0, target - now);
+      const d = Math.floor(diff / 86400000); diff -= d*86400000;
+      const h = Math.floor(diff / 3600000);  diff -= h*3600000;
+      const m = Math.floor(diff / 60000);    diff -= m*60000;
+      const s = Math.floor(diff / 1000);
+      const pad = (n)=> String(n).padStart(2,'0');
+      document.getElementById('cd-d').textContent = pad(d);
+      document.getElementById('cd-h').textContent = pad(h);
+      document.getElementById('cd-m').textContent = pad(m);
+      document.getElementById('cd-s').textContent = pad(s);
+    };
+    tick();
+    cdTimer = setInterval(tick, 1000);
+  }
+</script>
+
+</body>
+</html>
