@@ -281,6 +281,7 @@
     <a href="#" class="flex items-center">
       <img src="assets/convidaeu-logo-mark.png" alt="Convida&u — Convites Digitais Interativos" class="h-9 md:h-10 w-auto" style="object-fit:contain;" />
     </a>
+    <!-- Desktop menu -->
     <div class="hidden md:flex items-center gap-8 text-sm text-ink/70">
       <a href="#temas" class="hover:text-ink transition">Temas</a>
       <a href="#como" class="hover:text-ink transition">Como funciona</a>
@@ -288,9 +289,30 @@
       <a href="#precos" class="hover:text-ink transition">Preços</a>
       <a href="#faq" class="hover:text-ink transition">Dúvidas</a>
     </div>
-    <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20criar%20meu%20convite%20digital" target="_blank" rel="noopener" class="btn-primary px-5 py-2.5 rounded-full text-sm font-medium">Criar meu convite</a>
+    <div class="flex items-center gap-3">
+      <a href="https://wa.me/5521990570119?text=Ol%C3%A1!%20Quero%20criar%20meu%20convite%20digital" target="_blank" rel="noopener" class="btn-primary px-5 py-2.5 rounded-full text-sm font-medium">Criar meu convite</a>
+      <!-- Hamburger button — mobile only -->
+      <button id="menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-ink/5 transition" aria-label="Menu">
+        <span class="block w-5 h-0.5 bg-ink rounded transition-all" id="bar1"></span>
+        <span class="block w-5 h-0.5 bg-ink rounded transition-all" id="bar2"></span>
+        <span class="block w-5 h-0.5 bg-ink rounded transition-all" id="bar3"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile dropdown menu -->
+  <div id="mobile-menu" class="md:hidden hidden bg-cream-50/98 backdrop-blur-md border-t border-ink/5 px-6 py-4 flex flex-col gap-1">
+    <a href="#temas" class="mobile-link py-3 text-sm font-medium text-ink/70 border-b border-ink/5 hover:text-ink transition flex items-center justify-between">Temas <span class="text-ink/30">→</span></a>
+    <a href="#como" class="mobile-link py-3 text-sm font-medium text-ink/70 border-b border-ink/5 hover:text-ink transition flex items-center justify-between">Como funciona <span class="text-ink/30">→</span></a>
+    <a href="#preview" class="mobile-link py-3 text-sm font-medium text-ink/70 border-b border-ink/5 hover:text-ink transition flex items-center justify-between">Preview <span class="text-ink/30">→</span></a>
+    <a href="#precos" class="mobile-link py-3 text-sm font-medium text-lilac-600 border-b border-ink/5 hover:text-lilac-700 transition flex items-center justify-between font-semibold">💰 Ver Preços e Planos <span class="text-lilac-400">→</span></a>
+    <a href="#faq" class="mobile-link py-3 text-sm font-medium text-ink/70 hover:text-ink transition flex items-center justify-between">Dúvidas <span class="text-ink/30">→</span></a>
   </div>
 </nav>
+
+<!-- Botão flutuante Preços — mobile only -->
+<a href="#precos" id="fab-precos" class="md:hidden fixed bottom-24 right-4 z-40 bg-lilac-600 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-lg flex items-center gap-1.5 transition hover:bg-lilac-700" style="background:#6B4A9E;">
+  💰 Ver Preços
+</a>
 
 <!-- ============ HERO ============ -->
 <header class="hero-bg relative pt-32 pb-24 overflow-hidden">
@@ -1011,6 +1033,52 @@
 </a>
 
 <script>
+  // ===== Mobile menu =====
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const bar1 = document.getElementById('bar1');
+  const bar2 = document.getElementById('bar2');
+  const bar3 = document.getElementById('bar3');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('hidden', !menuOpen);
+    // Animate hamburger to X
+    if (menuOpen) {
+      bar1.style.transform = 'translateY(8px) rotate(45deg)';
+      bar2.style.opacity = '0';
+      bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
+    } else {
+      bar1.style.transform = '';
+      bar2.style.opacity = '';
+      bar3.style.transform = '';
+    }
+  });
+
+  // Close menu when clicking a link
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu.classList.add('hidden');
+      bar1.style.transform = '';
+      bar2.style.opacity = '';
+      bar3.style.transform = '';
+    });
+  });
+
+  // Hide FAB when pricing section is visible
+  const fabPrecos = document.getElementById('fab-precos');
+  if (fabPrecos) {
+    const precosSection = document.getElementById('precos');
+    if (precosSection) {
+      const observer = new IntersectionObserver(entries => {
+        fabPrecos.style.display = entries[0].isIntersecting ? 'none' : '';
+      }, { threshold: 0.1 });
+      observer.observe(precosSection);
+    }
+  }
+
   // ===== Reveal on scroll =====
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
